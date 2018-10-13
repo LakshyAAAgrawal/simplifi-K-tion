@@ -6,55 +6,65 @@
 # Group: 3
 # Date: 11 October 2018
 
-def is_adjacent(num1, num2):
+def dec_to_bin(numVar, num):
+    '''
+    Returns a string in given number of digits(numVar) representing num in binary
+    '''
+    i=0
+    while True:
+        t=2**i
+        if t>num:
+            i=i-1
+            break
+        i=i+1
+    hext=''
+    while i!=-1:
+        z=num//(2**i)
+        hext=hext+"01"[z]
+        num=num-(2**i)*z
+        i=i-1
+    if hext=='':
+        hext='0'
+    if len(hext)!=numVar:
+        hext='0'*(numVar-len(hext))+hext
+    return(hext)
+
+def is_adjacent(numVar, num1, num2):
     '''
     Given 2 numbers(representing minterms), this function returns if they correspond to adjacet cells in k-map representation or not.
     return True if adjacent
     return False in all other cases
     '''
-    n=abs(num1-num2)
-    if (n==1) or (n==2) or (n==4) or (n==8):
+    num1=dec_to_bin(numVar,num1)
+    num2=dec_to_bin(numVar,num2)
+    i=0
+    count=0
+    while i<len(num1):
+        if num1[i]!=num2[i]:
+            count=count+1
+        i=i+1
+        if count>=2:
+            return(False)
+    if count==1:
         return(True)
     else:
         return(False)
 
-def list_of_implicants_corresponding_minterm_given_size(size, minterm, func_as_list):
-    lis=[]
-    if func_as_list[minterm]==0:
-        return(lis)
+def list_of_adj_pos(numVar, minterm):
+    if numVar==1:
+        return([(minterm+1)%2])
     else:
-        if size==0:
-            return(lis)
-        elif size==1:
-            lis.append([minterm])
-            return(lis)
-        elif size==2:
-            i=0
-            while i<len(func_as_list):
-                if func_as_list[i]==1 and is_adjacent(minterm, i):
-                    l=[minterm, i]
-                    l.sort()
-                    lis.append(l)
-                else:
-                    
+        lis=[]
+        i=0
+        while i<2**numVar:
+            if i==minterm:
                 i=i+1
-
-def list_of_implicants__full_function(numVar, func_as_list):
-    '''
-    This function takes a list represnting a given function as returned by the function function_rep_as_list() and returns a list, containing the prime implicants corresponding to each minterm in the function
-    '''
-    n=len(func_as_list)
-    list_of_implicants=[]
-    for i in range(0, n):
-        l.append([])
-    
-    i=0
-    while i<n:
-        if func_as_list[i]==1:
-            j=0
-            while j<n:
-                if func_as_list[j]==1 and is_adjacent(i,j):
-                    
+                continue
+            else:
+                if is_adjacent(numVar, i, minterm):
+                    lis.append(i)
+                i=i+1
+        return(lis)
 
 def function_rep_as_list(numVar, str1):
     '''
