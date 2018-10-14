@@ -86,7 +86,10 @@ def function_rep_as_list(numVar, str1):
     for i in range(0, 2**numVar):
         l.append(0)
     minterms, dont_care=str1.split()
-    minterms=list(map(int, minterms[1:-1].split(',')))
+    if not len(minterms)==2:
+        minterms=list(map(int, minterms[1:-1].split(',')))
+    else:
+        minterms=[]
     if not len(dont_care)==3:
         dont_care=list(map(int, dont_care[2:-1].split(',')))
     else:
@@ -144,6 +147,28 @@ def prime_implicants(numVar, func_rep_as_list):
         if i in list_of_all_prime_implicants:
             list_of_all_prime_implicants.remove(i)
     return(list_of_all_prime_implicants)
+
+def minterm_belong_to_prime(minterm, prime_implicant):
+    i=0
+    while i<len(prime_implicant):
+        if prime_implicant[i]=='-':
+            i=i+1
+            continue
+        else:
+            if prime_implicant[i]!=minterm[i]:
+                return(False)
+        i=i+1
+    return(True)
+
+def prime_implicants_by_minterms(numVar, list_of_prime_implicants, func_rep_as_list):
+    list_of_minterms=minterms_as_bin(numVar, func_rep_as_list, 1)
+    dict_of_prime_implicant_by_minterm={}
+    for i in list_of_minterms:
+        dict_of_prime_implicant_by_minterm[i]=[]
+        for j in list_of_prime_implicants:
+            if minterm_belong_to_prime(i, j):
+                dict_of_prime_implicant_by_minterm[i].append(j)
+    return(dict_of_prime_implicant_by_minterm)
 
 def minFunc(numVar, stringIn):
 	"""

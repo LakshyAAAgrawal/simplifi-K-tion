@@ -6,6 +6,8 @@ from HW2_2018xxx import comm_expr
 from HW2_2018xxx import is_adjacent
 from HW2_2018xxx import func_list_of_prime_implicants
 from HW2_2018xxx import prime_implicants
+from HW2_2018xxx import minterm_belong_to_prime
+from HW2_2018xxx import prime_implicants_by_minterms
 
 class testpoint(unittest.TestCase):
     def test_dec_to_bin(self):
@@ -38,6 +40,17 @@ class testpoint(unittest.TestCase):
         self.assertEqual(is_adjacent('-1-','-01'), False)
         self.assertEqual(is_adjacent('0','1'), True)
         self.assertEqual(is_adjacent('00-0','0-01'), False)
+    
+    def test_minterm_belong_to_prime(self):
+        self.assertEqual(minterm_belong_to_prime('0000','00--'), True)
+        self.assertEqual(minterm_belong_to_prime('0110', '01-0'), True)
+        self.assertEqual(minterm_belong_to_prime('0101', '1---'), False)
+        self.assertEqual(minterm_belong_to_prime('001', '-1-'), False)
+        self.assertEqual(minterm_belong_to_prime('01', '-1'), True)
+    
+    def test_prime_implicants_by_minterms(self):
+        self.assertEqual(prime_implicants_by_minterms(4, ['-1-0', '-11-', '0-01', '01--', '1-10'],[0,'X',0,0,1,1,1,'X',0,'X',1,0,'X',0,1,'X']), {'0100':['-1-0','01--'], '0101':['0-01','01--'], '0110':['-1-0', '-11-', '01--'], '1010':['1-10'], '1110':['-1-0', '-11-', '1-10']})
+        self.assertEqual(prime_implicants_by_minterms(4,['-001', '-010', '-100', '-111', '0-10', '01-0', '011-', '1-0-', '10-0', '11-1'],[0,'X','X',0,'X',0,1,1,1,1,1,0,1,'X',0,1]),{'0110':['0-10','01-0','011-'],'0111':['-111','011-'],'1000':['1-0-','10-0'],'1001':['-001','1-0-'], '1010':['-010','10-0'], '1100':['-100','1-0-'], '1111':['-111', '11-1']})
         
     def test_func_list_of_prime_implicants(self):
         self.assertEqual(func_list_of_prime_implicants(4,['0000','0001','0010','0100','0101','1000','1001','1100','1101','1110']),['--0-','00-0','11-0'])
@@ -60,9 +73,8 @@ class testpoint(unittest.TestCase):
         self.assertEqual(prime_implicants(2,[1,'X',1,'X']),['--'])
         self.assertEqual(prime_implicants(1,[0,'X']),[])
         self.assertEqual(prime_implicants(1,[1,0]),['0'])
-        '''
-        self.assertEqual(prime_implicants(,[]),[])
-        '''
+    #below test case is for reduced expression
+    #self.assertEqual(prime_implicants(4,[0,1,0,0,'X',1,1,0,1,0,1,'X',0,'X','X',1]),['01-0','1-1-'])
         
     def test_minFunc(self):
         None
