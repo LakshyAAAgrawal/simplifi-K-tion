@@ -68,11 +68,11 @@ def list_of_adj_pos(numVar, minterm):
                 i=i+1
         return(lis)
 '''
-def minterms_as_bin(numVar, function_rep_as_list):
+def minterms_as_bin(numVar, function_rep_as_list, match_against):
     i=0
     lis=[]
     while i<len(function_rep_as_list):
-        if function_rep_as_list[i]==1 or function_rep_as_list[i]=='X':
+        if function_rep_as_list[i]==match_against:
             lis.append(dec_to_bin(numVar, i))
         i=i+1
     return(lis)
@@ -134,7 +134,16 @@ def func_list_of_prime_implicants(numVar, list_of_implicants, level=1):
     else:
         return(func_list_of_prime_implicants(numVar, list_of_implicants, level=level+1))
 
-
+def prime_implicants(numVar, func_rep_as_list):
+    list_of_minterms_only_dont_care=minterms_as_bin(numVar, func_rep_as_list, 'X')
+    list_of_minterms_incl_dont_care=minterms_as_bin(numVar, func_rep_as_list, 1) + list_of_minterms_only_dont_care
+    list_of_minterms_incl_dont_care.sort()
+    list_of_all_prime_implicants=func_list_of_prime_implicants(numVar, list_of_minterms_incl_dont_care, level=1)
+    list_of_implicants_to_remove=func_list_of_prime_implicants(numVar, list_of_minterms_only_dont_care, level=1)
+    for i in list_of_implicants_to_remove:
+        if i in list_of_all_prime_implicants:
+            list_of_all_prime_implicants.remove(i)
+    return(list_of_all_prime_implicants)
 
 def minFunc(numVar, stringIn):
 	"""
@@ -152,9 +161,6 @@ def minFunc(numVar, stringIn):
         Do not include any print statements in the function.
 	"""
 	func_rep=function_rep_as_list(numVar, stringIn)
-	list_of_minterms_single=minterms_as_bin(numVar, func_rep)
-	list_of_prime_implicants=func_list_of_prime_implicants(numVar, list_of_minterms_single, level=1)
+	list_of_prime_implicants=prime_implicants(numVar, func_rep)
 	stringOut=str(list_of_prime_implicants)
 	return stringOut
-
-print(minFunc(4, "(0,1,2,4,5,12,13,8,9) d(5,14)"))

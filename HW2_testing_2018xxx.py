@@ -5,6 +5,7 @@ from HW2_2018xxx import function_rep_as_list
 from HW2_2018xxx import comm_expr
 from HW2_2018xxx import is_adjacent
 from HW2_2018xxx import func_list_of_prime_implicants
+from HW2_2018xxx import prime_implicants
 
 class testpoint(unittest.TestCase):
     def test_dec_to_bin(self):
@@ -46,6 +47,22 @@ class testpoint(unittest.TestCase):
         self.assertEqual(func_list_of_prime_implicants(3,['000','001','010','011','100','101','110','111']),['---'])
         self.assertEqual(func_list_of_prime_implicants(3,['011','101','110']),['011','101','110'])
         self.assertEqual(func_list_of_prime_implicants(2,['00','01','10','11']),['--'])
+        
+    def test_prime_implicants(self):
+        self.assertEqual(prime_implicants(4,[0,0,0,0,0,'X',0,'X',0,0,'X',0,0,'X',0,0]),[])
+        self.assertEqual(prime_implicants(4,[1,1,1,0,1,'X',0,0,1,1,0,0,1,1,'X',0]),['--0-','00-0','11-0'])
+        self.assertEqual(prime_implicants(4,[1,0,'X','X',0,'X',0,0,0,0,0,0,0,'X',1,'X']),['00-0','111-'])
+        self.assertEqual(prime_implicants(4,[1,0,0,0,'X',0,0,'X',1,'X','X',0,1,0,1,0]),['--00','1--0','100-'])
+        self.assertEqual(prime_implicants(3,['X','X','X',1,'X',0,'X',1]),['-1-','0--'])
+        self.assertEqual(prime_implicants(3,['X','X',0,0,0,0,'X',1]),['11-'])
+        self.assertEqual(prime_implicants(3,[1,0,'X',1,'X',0,1,0]),['--0','01-'])
+        self.assertEqual(prime_implicants(2,[1,0,1,'X']),['-0','1-'])
+        self.assertEqual(prime_implicants(2,[1,'X',1,'X']),['--'])
+        self.assertEqual(prime_implicants(1,[0,'X']),[])
+        self.assertEqual(prime_implicants(1,[1,0]),['0'])
+        '''
+        self.assertEqual(prime_implicants(,[]),[])
+        '''
         
     def test_minFunc(self):
         None
