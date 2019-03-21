@@ -1,23 +1,19 @@
-# CSE 101 - IP HW2
 # K-Map Minimization 
 # Test File
-# Name: Lakshya A Agrawal
-# Roll Number:  2018242
-# Section:  B
-# Group: 3
+# Author : Lakshya A Agrawal
 # Date: 16 October 2018
 
 import unittest
-from HW2_2018242 import minFunc
-from HW2_2018242 import dec_to_bin
-from HW2_2018242 import function_rep_as_list
-from HW2_2018242 import comm_expr
-from HW2_2018242 import is_adjacent
-from HW2_2018242 import func_list_of_prime_implicants
-from HW2_2018242 import prime_implicants
-from HW2_2018242 import minterm_belong_to_prime
-from HW2_2018242 import prime_implicants_by_minterms
-from HW2_2018242 import number_of_literals
+from Ksimplifier import minFunc
+from Ksimplifier import dec_to_bin
+from Ksimplifier import function_rep_as_list
+from Ksimplifier import comm_expr
+from Ksimplifier import is_adjacent
+from Ksimplifier import func_list_of_prime_implicants
+from Ksimplifier import prime_implicants
+from Ksimplifier import minterm_belong_to_prime
+from Ksimplifier import prime_implicants_by_minterms
+from Ksimplifier import number_of_literals
 
 class testpoint(unittest.TestCase):
     def test_dec_to_bin(self):

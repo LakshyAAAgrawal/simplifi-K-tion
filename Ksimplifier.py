@@ -1,9 +1,5 @@
-# CSE 101 - IP HW2
 # K-Map Minimization 
-# Name: Lakshya A Agrawal
-# Roll Number:  2018242
-# Section:  B
-# Group: 3
+# Author : Lakshya A Agrawal
 # Date: 16 October 2018
 
 #import statements
