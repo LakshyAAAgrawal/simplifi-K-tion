@@ -1,6 +1,8 @@
 # simplifi-K-tion
-python program to simplify a given boolean function of any size to it's minimum cover.
-To use, import as:
+Python and Common Lisp program to simplify a given boolean function of any size to it's minimum cover.
+## Python
+The python module is present under Ksimplifier.py.
+### Usage
 ```python
 from Ksimplifier import minFunc
 ```
@@ -26,4 +28,17 @@ Tests can be run by
  ```
  python3 Ksimplifier_testing.py
  ```
- 
+
+## Common Lisp
+The Common Lisp program is intended to work with Maxima CAS and is now part of the core [Maxima repository](https://sourceforge.net/p/maxima/)(Merged in May 2019 through Sourceforge [merge #10](https://sourceforge.net/p/maxima/code/merge-requests/10/)). The program is present under Ksimplifier.lisp.
+### Usage
+In a Maxima repl:
+```maxima
+load(logic);
+load("Ksimplifier.lisp");
+```
+Example usage:
+```maxima
+(%i4) logic_simplify(a or (a or b));
+(%o4)                               a or b
+```
